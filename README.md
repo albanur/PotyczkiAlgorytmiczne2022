@@ -1,0 +1,1 @@
+# PotyczkiAlgorytmiczne2022
