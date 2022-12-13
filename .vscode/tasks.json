@@ -2,7 +2,7 @@
     "tasks": [
         {
             "type": "cppbuild",
-            "label": "Build release",
+            "label": "Build Release",
             "command": "g++.exe",
             // -O3 -static abc.cpp -std=c++17
             "args": [

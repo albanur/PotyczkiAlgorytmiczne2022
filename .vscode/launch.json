@@ -1,11 +1,11 @@
 {
     "configurations": [
         {
-            "name": "C/C++: g++.exe build and debug active file",
+            "name": "<-> C/C++: g++.exe build and debug active file",
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
-            "args": ["<", "${fileDirname}\\in\\input01.in"],
+            "args": ["<", "${fileDirname}\\input.in"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
@@ -24,7 +24,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Debug solution"
+            "preLaunchTask": "Build Debug"
         }
     ],
     "version": "2.0.0"
