@@ -10,7 +10,7 @@ void DrawParallelogram(string& instructions, int64_t sizeX, int64_t sizeY);
 void DrawRightZigZag(string& instructions, int64_t size);
 void DrawRight(string& instructions, int64_t size);
 void DrawDownLeft(string& instructions, int64_t size);
-void DrawLeft(string& instructions, int64_t size);
+void DrawLeftZig(string& instructions, int64_t size);
 string RepeatPattern(string pattern, int64_t times);
 
 void DrawTriangle1(string& instructions)
@@ -21,6 +21,25 @@ void DrawTriangle1(string& instructions)
 void DrawTriangle2(string& instructions)
 {
     instructions += "AEACAEE";
+}
+
+void DrawTriangleUpTo9(string& instructions, int64_t size)
+{
+    int64_t sizeX, sizeY;
+    sizeX = size / 2;
+    sizeY = size - sizeX;
+    if ((sizeY) % 2 == 1)
+    {
+        sizeY++;
+        sizeX--;
+    }
+
+    DrawParallelogram(instructions, sizeX, sizeY);
+    DrawRight(instructions, sizeX);
+    DrawDownLeft(instructions, sizeY);
+    DrawTriangle(instructions, sizeY);
+    DrawLeftZig(instructions, sizeX);
+    DrawTriangle(instructions, sizeX-1);
 }
 
 void DrawTriangle(string& instructions, int64_t size)
@@ -39,31 +58,55 @@ void DrawTriangle(string& instructions, int64_t size)
         DrawTriangle2(instructions);
         return;
     }
-
-    int64_t sizeX, sizeY;
-    sizeX = size / 2;
-    sizeY = size - sizeX;
-    if ((sizeY) % 2 == 1)
+    if (size <= 10)
     {
-        sizeY++;
-        sizeX--;
+        DrawTriangleUpTo9(instructions, size);
+        return; 
     }
 
-    DrawParallelogram(instructions, sizeX, sizeY);
-    DrawRight(instructions, sizeX);
-    DrawDownLeft(instructions, sizeY);
-    DrawTriangle(instructions, sizeY);
-    DrawLeft(instructions, sizeX);
-    DrawTriangle(instructions, sizeX-1);
+    int64_t r = size%9;
+    if(r != 0)
+    {
+        DrawParallelogram(instructions, r, size - r);
+    }
+
+    int64_t x = size/9;
+    for(int i = 8; i >= 1; i--)
+    {
+        DrawParallelogram(instructions, x, i*x);
+    }
+    DrawRight(instructions, x);
+
+    string trianglePattern;
+    DrawLeftZig(trianglePattern, x);
+    DrawTriangle(trianglePattern, x-1);
+    instructions += "9[" + trianglePattern + "]";
+
+    if(r != 0)
+    {
+        DrawLeftZig(trianglePattern, r);
+        DrawTriangle(trianglePattern, r-1);
+    }
 }
 
 void DrawParallelogram(string& instructions, int64_t sizeX, int64_t sizeY)
 {
     string pattern;
     DrawRightZigZag(pattern, sizeX);
-    DrawLeft(pattern, sizeX);
+    DrawLeftZig(pattern, sizeX);
 
     instructions += RepeatPattern(pattern, sizeY/2);
+
+    if((sizeY % 2) == 1)
+    {
+        DrawRightZigZag(pattern, sizeX);
+    }
+    else
+    {
+        DrawRight(instructions, sizeX);
+    }
+
+    DrawDownLeft(instructions, sizeY);
 }
 
 void DrawRightZigZag(string& instructions, int64_t size)
@@ -82,7 +125,7 @@ void DrawDownLeft(string& instructions, int64_t size)
     instructions += RepeatPattern("C", size);
 }
 
-void DrawLeft(string& instructions, int64_t size)
+void DrawLeftZig(string& instructions, int64_t size)
 {
     instructions += RepeatPattern("EC", size-1);
     instructions += "E";
