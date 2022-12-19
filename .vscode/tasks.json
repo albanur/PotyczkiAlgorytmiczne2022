@@ -31,11 +31,8 @@
             "type": "cppbuild",
             "label": "Build Debug",
             "command": "g++.exe",
-            // -O3 -static abc.cpp -std=c++17
             "args": [
                 "-fdiagnostics-color=always",
-                //"-O3",
-                //"-static",
                 "-g",
                 "${file}",
                 "-o",
